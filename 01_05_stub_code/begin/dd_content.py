@@ -47,7 +47,16 @@ def get_twitter_trends():
     pass
 
 def get_wikipedia_article():
-    pass
+    apiUrl = "https://en.wikipedia.org/api/rest_v1/page/random/summary"
+
+    data = json.load(request.urlopen(apiUrl))
+
+    summary = data["extract"]
+    title = data["title"]
+    url = data['content_urls']['desktop']['page']
+
+    return (title, summary, url)
+    
 
 if __name__ == '__main__':
     # pass # test code
@@ -55,5 +64,8 @@ if __name__ == '__main__':
     # print("get random quote")
     # print(get_random_quote())
     # print(get_random_quote())
-    # print(get_random_quote(quote=None))
-    print(get_weather_forecast())
+    # print(get_random_quote(quote=None))x
+    
+    # print(get_weather_forecast())
+
+    print(get_wikipedia_article())
