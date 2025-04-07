@@ -2,6 +2,11 @@ from tkinter import *
 from tkinter import ttk
 
 class DailyDigestGUI:
+    # pyinstaller -w -F .\dd_gui.py
+    # creates an app
+    # -w : not opening console window
+    # -F : One file bundlered executable created
+    # .\dd_gui.py :  enterance of program 
 
     def __init__(self, root):
         pass # build the GUI
