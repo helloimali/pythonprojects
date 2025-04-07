@@ -1,5 +1,6 @@
 import dd_content
 import datetime
+from email.message import EmailMessage
 
 class DailyDigestEmail:
 
@@ -9,9 +10,26 @@ class DailyDigestEmail:
             'weather':{'include': True, 'content':  dd_content.get_weather_forecast()},
             'wikipedia':{'include': True, 'content': dd_content.get_wikipedia_article()}
         }
+        self.recipients_list = ['test@email.com']
+        self.sender_creds = {'email':'new@email.com', 'pass': 'passpasspasspass'}
 
     def send_email(self):
-        pass
+        msg = EmailMessage()
+        msg['Subject'] = f'Daily Digest - {datetime.date.today().strftime("%d %b %Y")}'
+        msg['From'] = self.sender_credentials['email']
+        msg['To'] = ', '.join(self.recipients_list)
+
+        # add Plaintext and HTML content
+        msg_body = self.format_message()
+        msg.set_content(msg_body['text'])
+        msg.add_alternative(msg_body['html'], subtype='html')
+
+        # secure connection with STMP server and send email
+        with smtplib.SMTP('smtp.office365.com', 587) as server:
+            server.starttls()
+            server.login(self.sender_credentials['email'],
+                         self.sender_credentials['password'])
+            server.send_message(msg)
 
     def format_message(self):
         # gen plaintext
